@@ -5,31 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d343a93d-e21c-404a-9590-88f9d94682c2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/DentalSoftApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/dao/DashboardRepo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/dao/UtilisateurRepo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/dao/implementations/DashboardRepoImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/dao/implementations/UtilisateurRepoImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/model/Utilisateur.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/model/enums/Role.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/presentation/vue/DashboardView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/presentation/vue/LoginView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/service/DashboardService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/service/UtilisateurService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/consultation.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/dossierMedicale.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/ordonnace.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/patient.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/rendezVous.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/role.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/utilisateur.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/presentation/vue/DashboardView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/presentation/vue/DashboardView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,9 +23,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 0
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
   <component name="ProjectId" id="2rIym61FjfRq5G44iO8cWuxOHBH" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -64,7 +40,7 @@
     "Application.LoginView.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "onboarding.tips.debug.path": "C:/Users/israe/IdeaProjects/DentalSofft/src/main/java/ma/dentalSoft/Main.java"
   }

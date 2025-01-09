@@ -49,7 +49,7 @@ public class DashboardView extends JFrame {
         navPanel.setBackground(new Color(102, 0, 153)); // Purple background
 
         // Navigation buttons
-        String[] navItems = {"Mon Profile", "Agenda", "Patients", "Caisse", "Personnel", "Paramètres", "", "Déconnexion"};
+        String[] navItems = {"Mon Profiles", "Agenda", "Patients", "Caisse", "Personnel", "Paramètres", "", "Déconnexion"};
         for (String item : navItems) {
             JButton btn = new JButton(item);
             btn.setForeground(Color.WHITE);
