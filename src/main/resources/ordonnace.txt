@@ -1,0 +1,4 @@
+# Format: id,dossierMedicalId,medicaments
+1,1,Amoxicillin 500mg;Ibuprofen 200mg
+2,2,Paracetamol 500mg
+3,3,Antibiotics 250mg

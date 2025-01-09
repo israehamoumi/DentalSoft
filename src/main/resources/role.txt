@@ -1,0 +1,3 @@
+# Format: roleId,roleName
+1,Dentiste
+2,Secretaire
