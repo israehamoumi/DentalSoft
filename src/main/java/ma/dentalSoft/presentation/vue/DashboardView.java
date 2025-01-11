@@ -74,6 +74,17 @@ public class DashboardView extends JFrame {
                     new ProfileView(utilisateur).setVisible(true);
                     dispose();
                 });
+            } else if (item.equals("Patients")) { // Action pour le bouton "Patients"
+                btn.addActionListener(e -> {
+                    JFrame patientFrame = new JFrame("Patients");
+                    patientFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                    patientFrame.setSize(800, 600);
+
+                    PatientView patientView = new PatientView(); // Vue des patients
+                    patientFrame.add(patientView);
+
+                    patientFrame.setVisible(true);
+                });
             }
 
             navPanel.add(btn);

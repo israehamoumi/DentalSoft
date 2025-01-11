@@ -1,4 +1,4 @@
-# Format: id,name,age,email,telephone,dateDeNaissance
-1,Mary Johnson,30,mary.johnson@example.com,123123123,1994-08-15
-2,Paul Anderson,45,paul.anderson@example.com,321321321,1979-05-22
-3,Susan Lee,25,susan.lee@example.com,456456456,1999-11-30
+# Format: id,name,sexe,age,email,telephone,dateDeNaissance
+1,Mary Johnson,F,30,mary.johnson@example.com,123123123,1994-08-15
+2,Paul Anderson,H,45,paul.anderson@example.com,321321321,1979-05-22
+3,Susan Lee,F,25,susan.lee@example.com,456456456,1999-11-30
