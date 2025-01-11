@@ -1,21 +1,36 @@
 package ma.dentalSoft.service;
 
-import ma.dentalSoft.dao.UtilisateurRepo;
-import ma.dentalSoft.dao.implementations.UtilisateurRepoImpl;
 import ma.dentalSoft.model.Utilisateur;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 public class UtilisateurService {
-    private final UtilisateurRepo utilisateurRepo = new UtilisateurRepoImpl();
 
-    public void addUtilisateur(Utilisateur utilisateur) {
-        utilisateurRepo.save(utilisateur);
-    }
-
-    public Utilisateur getUtilisateur(int id) {
-        return utilisateurRepo.findById(id);
-    }
-
-    public boolean validateLogin(String username, String password) {
-        return utilisateurRepo.validateCredentials(username, password);
+    public Utilisateur validateLogin(String username, String password) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/utilisateur.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length == 6) {
+                    String fileUsername = parts[1];
+                    String filePassword = parts[5];
+                    if (fileUsername.equals(username) && filePassword.equals(password)) {
+                        return new Utilisateur(
+                                Integer.parseInt(parts[0]),
+                                parts[1],
+                                parts[2],
+                                parts[3],
+                                parts[4],
+                                parts[5]
+                        );
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null; // Return null if no match is found
     }
 }

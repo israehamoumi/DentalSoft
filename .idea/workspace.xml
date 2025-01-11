@@ -5,9 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d343a93d-e21c-404a-9590-88f9d94682c2" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/model/Utilisateur.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/model/Utilisateur.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/presentation/vue/DashboardView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/presentation/vue/DashboardView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/presentation/vue/LoginView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/presentation/vue/LoginView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/presentation/vue/ProfileView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/presentation/vue/ProfileView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/service/UtilisateurService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/service/UtilisateurService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
