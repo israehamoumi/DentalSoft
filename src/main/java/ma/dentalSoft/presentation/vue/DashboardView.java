@@ -76,7 +76,7 @@ public class DashboardView extends JFrame {
                     // Créer un utilisateur fictif
                     Utilisateur utilisateur = new Utilisateur(
                             1,
-                            "John Doe",
+                            "John hamoumi",
                             "Dentiste",
                             "john.doe@example.com",
                             "123456789",
