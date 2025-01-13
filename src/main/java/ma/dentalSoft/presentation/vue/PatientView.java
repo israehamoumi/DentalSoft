@@ -4,267 +4,278 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class PatientView extends JPanel {
-    private int totalPatients = 0;
-    private int malePatients = 0;
-    private int femalePatients = 0;
     private DefaultTableModel tableModel;
-    private JTextField txtNom, txtPrenom, txtAge, txtEmail, txtAdresse, txtDateNaissance;
+    private JTable patientTable;
+    private JTextField txtNom, txtAge, txtEmail, txtAdresse, txtDateNaissance, txtSearch;
     private JComboBox<String> comboSexe;
+    private static final String FILE_PATH = "src/main/resources/patient.txt";
 
     public PatientView() {
-        // Définir la mise en page principale
         setLayout(new BorderLayout());
         setBackground(Color.WHITE);
 
-        // Titre
-        JLabel title = new JLabel("Liste des Patients", SwingConstants.CENTER);
+        // Title
+        JLabel title = new JLabel("Gestion des Patients", SwingConstants.CENTER);
         title.setFont(new Font("Arial", Font.BOLD, 28));
-        title.setForeground(new Color(102, 0, 153)); // Violet
+        title.setForeground(new Color(102, 0, 153));
         title.setBorder(new EmptyBorder(20, 10, 20, 10));
-        title.setOpaque(true);
-        title.setBackground(new Color(243, 236, 255)); // Couleur de fond claire
         add(title, BorderLayout.NORTH);
 
-        // Table des patients
+        // Table Panel
         JPanel tablePanel = createPatientTable();
         add(tablePanel, BorderLayout.CENTER);
 
-        // Panneau des statistiques
-        JPanel statsPanel = createStatsPanel();
-        add(statsPanel, BorderLayout.EAST);
-
-        // Formulaire moderne
+        // Form Panel
         JPanel formPanel = createPatientForm();
         add(formPanel, BorderLayout.SOUTH);
     }
 
     private JPanel createPatientTable() {
-        String[] columnNames = {"Nom Complet", "Sexe", "Âge", "Email", "Adresse", "Date de Naissance"};
-        Object[][] data = loadPatientDataFromFile("src/main/resources/patient.txt");
+        String[] columnNames = {"ID", "Nom", "Sexe", "Âge", "Email", "Adresse", "Date de Naissance"};
+        Object[][] data = loadPatientDataFromFile(FILE_PATH);
 
         tableModel = new DefaultTableModel(data, columnNames);
-        JTable patientTable = new JTable(tableModel);
+        patientTable = new JTable(tableModel);
         patientTable.setFont(new Font("Arial", Font.PLAIN, 14));
         patientTable.setRowHeight(25);
         patientTable.getTableHeader().setFont(new Font("Arial", Font.BOLD, 16));
-        patientTable.getTableHeader().setBackground(new Color(102, 0, 153)); // Violet
+        patientTable.getTableHeader().setBackground(new Color(102, 0, 153));
         patientTable.getTableHeader().setForeground(Color.WHITE);
-        patientTable.setGridColor(new Color(230, 230, 230)); // Lignes discrètes
+
+        patientTable.setPreferredScrollableViewportSize(new Dimension(800, 400)); // Bigger table
 
         JScrollPane scrollPane = new JScrollPane(patientTable);
-        scrollPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        scrollPane.setBackground(Color.WHITE);
+        scrollPane.setBorder(new EmptyBorder(10, 10, 10, 10));
 
         JPanel tablePanel = new JPanel(new BorderLayout());
-        tablePanel.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(new Color(102, 0, 153), 2, true),
-                new EmptyBorder(10, 10, 10, 10)
-        ));
-        tablePanel.setBackground(Color.WHITE);
+        tablePanel.setBorder(new EmptyBorder(10, 10, 10, 10));
         tablePanel.add(scrollPane, BorderLayout.CENTER);
+
+        // Search Panel
+        JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        searchPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        searchPanel.add(new JLabel("Rechercher :"));
+
+        txtSearch = new JTextField(20);
+        JButton btnSearch = new JButton("Rechercher");
+        btnSearch.addActionListener(e -> searchPatient());
+
+        searchPanel.add(txtSearch);
+        searchPanel.add(btnSearch);
+
+        tablePanel.add(searchPanel, BorderLayout.NORTH);
 
         return tablePanel;
     }
 
-    private JPanel createStatsPanel() {
-        JPanel statsPanel = new JPanel(new GridLayout(3, 1, 20, 20));
-        statsPanel.setBackground(new Color(243, 236, 255)); // Fond violet clair
-        statsPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
-
-        statsPanel.add(createCircle("Total Patients", totalPatients, new Color(102, 0, 153)));
-        statsPanel.add(createCircle("Hommes", malePatients, new Color(0, 102, 204)));
-        statsPanel.add(createCircle("Femmes", femalePatients, new Color(255, 51, 153)));
-
-        return statsPanel;
-    }
-
-    private JPanel createCircle(String labelText, int value, Color circleColor) {
-        JPanel circlePanel = new JPanel();
-        circlePanel.setLayout(new BorderLayout());
-        circlePanel.setBackground(new Color(243, 236, 255)); // Fond violet clair
-
-        JLabel circle = new JLabel(String.valueOf(value), SwingConstants.CENTER);
-        circle.setFont(new Font("Arial", Font.BOLD, 20));
-        circle.setForeground(Color.WHITE);
-        circle.setOpaque(true);
-        circle.setBackground(circleColor);
-        circle.setPreferredSize(new Dimension(100, 100));
-        circle.setHorizontalAlignment(SwingConstants.CENTER);
-        circle.setVerticalAlignment(SwingConstants.CENTER);
-        circle.setBorder(BorderFactory.createLineBorder(Color.WHITE, 4));
-
-        JLabel label = new JLabel(labelText, SwingConstants.CENTER);
-        label.setFont(new Font("Arial", Font.PLAIN, 14));
-        label.setForeground(new Color(102, 0, 153));
-
-        circlePanel.add(circle, BorderLayout.CENTER);
-        circlePanel.add(label, BorderLayout.SOUTH);
-
-        return circlePanel;
-    }
-
     private JPanel createPatientForm() {
         JPanel formPanel = new JPanel(new GridBagLayout());
-        formPanel.setBackground(new Color(243, 236, 255)); // Fond clair violet
-        formPanel.setBorder(new EmptyBorder(20, 20, 20, 20)); // Espacement
+        formPanel.setBackground(new Color(243, 236, 255));
+        formPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
 
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10); // Espacement entre les champs
+        gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weightx = 1;
 
-        // Champs de formulaire
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        formPanel.add(createLabeledField("Nom :", txtNom = new JTextField()), gbc);
+        txtNom = new JTextField(25);
+        txtAge = new JTextField(25);
+        txtEmail = new JTextField(25);
+        txtAdresse = new JTextField(25);
+        txtDateNaissance = new JTextField(25);
+        comboSexe = new JComboBox<>(new String[]{"H", "F"});
 
-        gbc.gridx = 1;
-        formPanel.add(createLabeledField("Prénom :", txtPrenom = new JTextField()), gbc);
+        addFormField(formPanel, gbc, 0, "Nom :", txtNom);
+        addFormField(formPanel, gbc, 1, "Sexe :", comboSexe);
+        addFormField(formPanel, gbc, 2, "Âge :", txtAge);
+        addFormField(formPanel, gbc, 3, "Email :", txtEmail);
+        addFormField(formPanel, gbc, 4, "Adresse :", txtAdresse);
+        addFormField(formPanel, gbc, 5, "Date de Naissance (JJ/MM/AAAA) :", txtDateNaissance);
 
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        formPanel.add(createLabeledField("Âge :", txtAge = new JTextField()), gbc);
-
-        gbc.gridx = 1;
-        formPanel.add(createLabeledField("Sexe :", comboSexe = new JComboBox<>(new String[]{"H", "F"})), gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        formPanel.add(createLabeledField("Email :", txtEmail = new JTextField()), gbc);
-
-        gbc.gridx = 1;
-        formPanel.add(createLabeledField("Adresse :", txtAdresse = new JTextField()), gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        formPanel.add(createLabeledField("Date de Naissance :", txtDateNaissance = new JTextField()), gbc);
-
-        // Boutons (Effacer et Valider)
+        // Buttons
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        buttonPanel.setBackground(new Color(243, 236, 255)); // Fond clair
-        JButton saveButton = new JButton("Valider");
-        styleButton(saveButton, new Color(102, 0, 153), Color.WHITE);
+        JButton btnAdd = createButton("Ajouter", e -> addPatient());
+        JButton btnUpdate = createButton("Modifier", e -> updatePatient());
+        JButton btnDelete = createButton("Supprimer", e -> deletePatient());
 
-        JButton clearButton = new JButton("Effacer");
-        styleButton(clearButton, Color.RED, Color.WHITE);
-
-        saveButton.addActionListener(e -> handleSaveAction());
-        clearButton.addActionListener(e -> clearFormFields());
-
-        buttonPanel.add(clearButton);
-        buttonPanel.add(saveButton);
+        buttonPanel.add(btnAdd);
+        buttonPanel.add(btnUpdate);
+        buttonPanel.add(btnDelete);
 
         gbc.gridx = 0;
-        gbc.gridy = 4;
-        gbc.gridwidth = 2; // Boutons sur toute la largeur
+        gbc.gridy = 6;
+        gbc.gridwidth = 2;
         formPanel.add(buttonPanel, gbc);
 
         return formPanel;
     }
 
-    private JPanel createLabeledField(String labelText, JComponent inputField) {
-        JPanel fieldPanel = new JPanel(new BorderLayout(10, 10));
-        fieldPanel.setBackground(new Color(243, 236, 255)); // Fond violet clair
-        JLabel label = new JLabel(labelText);
-        label.setFont(new Font("Arial", Font.BOLD, 16));
-        label.setForeground(new Color(102, 0, 153)); // Violet
-        fieldPanel.add(label, BorderLayout.WEST);
-        fieldPanel.add(inputField, BorderLayout.CENTER);
-        return fieldPanel;
+    private void addFormField(JPanel panel, GridBagConstraints gbc, int row, String label, JComponent field) {
+        gbc.gridx = 0;
+        gbc.gridy = row;
+        panel.add(new JLabel(label), gbc);
+
+        gbc.gridx = 1;
+        panel.add(field, gbc);
     }
 
-    private void styleButton(JButton button, Color background, Color foreground) {
-        button.setFont(new Font("Arial", Font.BOLD, 16));
-        button.setBackground(background);
-        button.setForeground(foreground);
-        button.setFocusPainted(false);
-        button.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
-        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    private JButton createButton(String text, ActionListener actionListener) {
+        JButton button = new JButton(text);
+        button.addActionListener(actionListener);
+        return button;
     }
 
-    private Object[][] loadPatientDataFromFile(String fileName) {
-        List<Object[]> patientList = new ArrayList<>();
-        totalPatients = 0; // Réinitialiser les statistiques
-        malePatients = 0;
-        femalePatients = 0;
-        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
-            String line;
-            int lineNumber = 0;
-            while ((line = br.readLine()) != null) {
-                lineNumber++;
-                if (lineNumber == 1) {
-                    continue; // Ignorer la première ligne (en-tête)
-                }
-                String[] fields = line.split(",");
-                Object[] row = new Object[fields.length - 1]; // Ignorer la première colonne
-                System.arraycopy(fields, 1, row, 0, fields.length - 1);
-                patientList.add(row);
-
-                // Mettre à jour les statistiques
-                totalPatients++;
-                if (fields[2].trim().equalsIgnoreCase("H")) malePatients++;
-                else if (fields[2].trim().equalsIgnoreCase("F")) femalePatients++;
-            }
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Erreur lors de la lecture du fichier : " + e.getMessage());
-        }
-        updateStatsPanel(); // Mettre à jour le panneau des statistiques
-        return patientList.toArray(new Object[0][]);
-    }
-
-
-    private void handleSaveAction() {
+    private void addPatient() {
+        int newId = generateNewId();
         String nom = txtNom.getText();
-        String prenom = txtPrenom.getText();
-        String age = txtAge.getText();
         String sexe = comboSexe.getSelectedItem().toString();
+        String age = txtAge.getText();
         String email = txtEmail.getText();
         String adresse = txtAdresse.getText();
         String dateNaissance = txtDateNaissance.getText();
 
-        // Ajouter la ligne dans le tableau
-        tableModel.addRow(new Object[]{nom + " " + prenom, sexe, age, email, adresse, dateNaissance});
+        if (!isValidDate(dateNaissance)) {
+            JOptionPane.showMessageDialog(this, "Veuillez entrer une date de naissance au format JJ/MM/AAAA.");
+            return;
+        }
 
-        // Sauvegarder les données dans le fichier
-        savePatientDataToFile("src/main/resources/patient.txt", nom, prenom, sexe, age, email, adresse, dateNaissance);
-
-        // Mettre à jour les statistiques
-        totalPatients++;
-        if (sexe.equals("H")) malePatients++;
-        else if (sexe.equals("F")) femalePatients++;
-
-        updateStatsPanel(); // Mettre à jour l'affichage des statistiques
-    }
-    private void updateStatsPanel() {
-        removeAll(); // Supprimer tous les composants actuels
-        JPanel statsPanel = createStatsPanel(); // Créer un nouveau panneau avec des statistiques mises à jour
-        add(statsPanel, BorderLayout.EAST); // Ajouter le panneau mis à jour
-        revalidate(); // Recalculer la disposition
-        repaint(); // Redessiner l'interface
+        tableModel.addRow(new Object[]{newId, nom, sexe, age, email, adresse, dateNaissance});
+        saveToFile(FILE_PATH, newId + "," + nom + "," + sexe + "," + age + "," + email + "," + adresse + "," + dateNaissance);
+        clearFields();
     }
 
+    private void updatePatient() {
+        int selectedRow = patientTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Veuillez sélectionner un patient à modifier.");
+            return;
+        }
 
-    private void clearFormFields() {
+        String nom = txtNom.getText();
+        String sexe = comboSexe.getSelectedItem().toString();
+        String age = txtAge.getText();
+        String email = txtEmail.getText();
+        String adresse = txtAdresse.getText();
+        String dateNaissance = txtDateNaissance.getText();
+
+        if (!isValidDate(dateNaissance)) {
+            JOptionPane.showMessageDialog(this, "Veuillez entrer une date de naissance au format JJ/MM/AAAA.");
+            return;
+        }
+
+        tableModel.setValueAt(nom, selectedRow, 1);
+        tableModel.setValueAt(sexe, selectedRow, 2);
+        tableModel.setValueAt(age, selectedRow, 3);
+        tableModel.setValueAt(email, selectedRow, 4);
+        tableModel.setValueAt(adresse, selectedRow, 5);
+        tableModel.setValueAt(dateNaissance, selectedRow, 6);
+
+        writeTableToFile(FILE_PATH);
+        clearFields();
+    }
+
+    private void deletePatient() {
+        int selectedRow = patientTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Veuillez sélectionner un patient à supprimer.");
+            return;
+        }
+
+        tableModel.removeRow(selectedRow);
+        writeTableToFile(FILE_PATH);
+        clearFields();
+    }
+
+    private void searchPatient() {
+        String searchTerm = txtSearch.getText().toLowerCase();
+        boolean found = false;
+
+        for (int i = 0; i < tableModel.getRowCount(); i++) {
+            for (int j = 0; j < tableModel.getColumnCount(); j++) {
+                String value = tableModel.getValueAt(i, j).toString().toLowerCase();
+                if (value.contains(searchTerm)) {
+                    patientTable.setRowSelectionInterval(i, i);
+                    patientTable.scrollRectToVisible(patientTable.getCellRect(i, 0, true));
+                    found = true;
+                    break;
+                }
+            }
+            if (found) break;
+        }
+
+        if (!found) {
+            JOptionPane.showMessageDialog(this, "Aucun patient trouvé.");
+        }
+    }
+
+    private int generateNewId() {
+        int highestId = 0;
+        for (int i = 0; i < tableModel.getRowCount(); i++) {
+            highestId = Math.max(highestId, Integer.parseInt(tableModel.getValueAt(i, 0).toString()));
+        }
+        return highestId + 1;
+    }
+
+    private boolean isValidDate(String date) {
+        return Pattern.matches("\\d{2}/\\d{2}/\\d{4}", date);
+    }
+
+    private void saveToFile(String filePath, String data) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
+            writer.write(data);
+            writer.newLine();
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Erreur lors de la sauvegarde : " + e.getMessage());
+        }
+    }
+
+    private void writeTableToFile(String filePath) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            writer.write("id,name,sexe,age,email,adresse,dateDeNaissance");
+            writer.newLine();
+            for (int i = 0; i < tableModel.getRowCount(); i++) {
+                StringBuilder row = new StringBuilder();
+                for (int j = 0; j < tableModel.getColumnCount(); j++) {
+                    row.append(tableModel.getValueAt(i, j)).append(",");
+                }
+                writer.write(row.substring(0, row.length() - 1));
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Erreur lors de la sauvegarde : " + e.getMessage());
+        }
+    }
+
+    private Object[][] loadPatientDataFromFile(String filePath) {
+        List<Object[]> data = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            int lineNumber = 0;
+            while ((line = reader.readLine()) != null) {
+                lineNumber++;
+                if (lineNumber == 1) continue; // Skip header
+                data.add(line.split(","));
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Erreur lors du chargement des données : " + e.getMessage());
+        }
+        return data.toArray(new Object[0][]);
+    }
+
+    private void clearFields() {
         txtNom.setText("");
-        txtPrenom.setText("");
+        comboSexe.setSelectedIndex(0);
         txtAge.setText("");
         txtEmail.setText("");
         txtAdresse.setText("");
         txtDateNaissance.setText("");
-        comboSexe.setSelectedIndex(0);
-    }
-
-    private void savePatientDataToFile(String fileName, String nom, String prenom, String sexe, String age, String email, String adresse, String dateNaissance) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName, true))) {
-            bw.write(nom + "," + prenom + "," + sexe + "," + age + "," + email + "," + adresse + "," + dateNaissance);
-            bw.newLine();
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Erreur lors de l'écriture dans le fichier : " + e.getMessage());
-        }
     }
 }

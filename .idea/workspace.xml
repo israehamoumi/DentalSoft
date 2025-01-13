@@ -5,12 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d343a93d-e21c-404a-9590-88f9d94682c2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/presentation/vue/PatientView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/presentation/vue/DossierMedicaleView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/presentation/vue/PatientsView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/presentation/vue/DashboardView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/presentation/vue/DashboardView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/presentation/vue/PatientView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/presentation/vue/PatientView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/patient.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/patient.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/utilisateur.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/utilisateur.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,14 +65,6 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.22562.218" />
-        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-IU-243.22562.218" />
-      </set>
-    </attachedChunks>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
