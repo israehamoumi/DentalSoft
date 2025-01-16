@@ -1,0 +1,4 @@
+# Format: id,nomActe,description,cout
+1,Détartrage,Nettoyage des dents,200
+2,Extraction,Extraction d'une dent,500
+3,Blanchiment,Éclaircissement des dents,1000

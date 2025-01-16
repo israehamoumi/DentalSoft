@@ -28,7 +28,7 @@ public class RendezVousView extends JPanel {
         JPanel header = new JPanel(new BorderLayout());
         header.setBackground(Color.WHITE);
 
-        JLabel lblTitle = new JLabel("Gestion des Rendez-vous", SwingConstants.CENTER);
+        JLabel lblTitle = new JLabel("Gestion de Dossier Medical", SwingConstants.CENTER);
         lblTitle.setFont(new Font("Arial", Font.BOLD, 24));
         lblTitle.setForeground(new Color(102, 0, 153));
 
@@ -39,22 +39,16 @@ public class RendezVousView extends JPanel {
     private JPanel createMainContent() {
         JPanel mainContent = new JPanel(new BorderLayout());
         mainContent.setBackground(Color.WHITE);
-
-        // Tabbed Pane
-        JTabbedPane tabbedPane = new JTabbedPane();
-        tabbedPane.addTab("Consultations", createConsultationsTab());
-        tabbedPane.addTab("Rendez-vous", createRendezVousTab());
-        tabbedPane.addTab("Ordonnances", createOrdonnancesTab());
-
-        mainContent.add(tabbedPane, BorderLayout.CENTER);
+        mainContent.add(createTabbedPane(), BorderLayout.CENTER);
         return mainContent;
     }
 
-    private JPanel createConsultationsTab() {
-        JPanel consultationsTab = new JPanel();
-        consultationsTab.setBackground(Color.WHITE);
-        consultationsTab.add(new JLabel("Gestion des consultations"));
-        return consultationsTab;
+    private JTabbedPane createTabbedPane() {
+        JTabbedPane tabbedPane = new JTabbedPane();
+        tabbedPane.addTab("Consultations", new ConsultationView());
+        tabbedPane.addTab("Rendez-vous", createRendezVousTab());
+        tabbedPane.addTab("Ordonnances", createOrdonnancesTab());
+        return tabbedPane;
     }
 
     private JPanel createRendezVousTab() {
@@ -62,7 +56,7 @@ public class RendezVousView extends JPanel {
         rendezVousTab.setBackground(Color.WHITE);
 
         // Table
-        String[] columnNames = {"Date", "Heure", "Statut", "Motif", "Action"};
+        String[] columnNames = {"Date", "Heure", "Statut", "Motif"};
         Object[][] data = loadRendezVousData();
 
         tableModel = new DefaultTableModel(data, columnNames);
@@ -132,7 +126,7 @@ public class RendezVousView extends JPanel {
             String motif = txtMotif.getText();
 
             // Add data to the table
-            tableModel.addRow(new Object[]{date, heure, statut, motif, "Modifier/Supprimer"});
+            tableModel.addRow(new Object[]{date, heure, statut, motif});
 
             // Save data to file
             saveRendezVousData(date, heure, statut, motif);

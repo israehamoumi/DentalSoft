@@ -147,9 +147,13 @@ public class PatientView extends JPanel {
         List<Object[]> data = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
+            int lineNumber = 0;
             while ((line = reader.readLine()) != null) {
+                lineNumber++;
+                if (lineNumber == 1) continue; // Skip the first line (header)
+
                 String[] fields = line.split(",");
-                data.add(new Object[]{fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], "Voir"});
+                data.add(new Object[]{fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], "Voir"});
             }
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "Erreur lors du chargement des données : " + e.getMessage());
@@ -209,6 +213,4 @@ public class PatientView extends JPanel {
             return "Voir";
         }
     }
-
-
 }
