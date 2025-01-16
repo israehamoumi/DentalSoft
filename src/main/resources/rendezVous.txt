@@ -1,4 +1,4 @@
-# Format: id,patientId,date,temps
-1,1,2025-01-10,09:00
-2,2,2025-01-11,10:30
-3,3,2025-01-12,14:00
+ID,Date,Heure,Statut,Motif
+ID,2025-01-11,10:30,Détartrage,Approuvé
+ID,2025-01-12,14:00,Soins dentaires,Approuvé
+ID,2025-01-10,09:00,Consultation,Approuvé

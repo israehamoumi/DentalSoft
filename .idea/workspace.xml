@@ -5,12 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d343a93d-e21c-404a-9590-88f9d94682c2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/presentation/vue/DossierMedicaleView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/presentation/vue/PatientsView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/presentation/vue/RendezVousView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/presentation/vue/DashboardView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/presentation/vue/DashboardView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/presentation/vue/PatientView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/presentation/vue/PatientView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/patient.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/patient.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/rendezVous.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/rendezVous.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,6 +75,7 @@
       <updated>1736261042131</updated>
       <workItem from="1736367864166" duration="10385000" />
       <workItem from="1736450284041" duration="3090000" />
+      <workItem from="1736815984640" duration="5306000" />
     </task>
     <servers />
   </component>

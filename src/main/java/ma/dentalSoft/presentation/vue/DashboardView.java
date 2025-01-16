@@ -80,10 +80,11 @@ public class DashboardView extends JFrame {
                     patientFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                     patientFrame.setSize(800, 600);
 
-                    PatientView patientView = new PatientView(); // Vue des patients
+                    PatientView patientView = new PatientView(patientFrame); // Vue des patients
                     patientFrame.add(patientView);
 
                     patientFrame.setVisible(true);
+                    dispose();
                 });
             }
 
@@ -106,5 +107,4 @@ public class DashboardView extends JFrame {
 
         return mainPanel;
     }
-
 }
