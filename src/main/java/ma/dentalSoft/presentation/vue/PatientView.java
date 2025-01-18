@@ -1,6 +1,5 @@
 package ma.dentalSoft.presentation.vue;
 import java.awt.event.ActionListener;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
@@ -97,7 +96,12 @@ public class PatientView extends JPanel {
         // Buttons
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JButton btnAdd = createButton("Ajouter", e -> addPatient());
+        JButton btnUpdate = createButton("Modifier", e -> updateSelectedPatient());
+        JButton btnDelete = createButton("Supprimer", e -> deleteSelectedPatient());
+
         buttonPanel.add(btnAdd);
+        buttonPanel.add(btnUpdate);
+        buttonPanel.add(btnDelete);
 
         gbc.gridx = 0;
         gbc.gridy = 6;
@@ -105,6 +109,54 @@ public class PatientView extends JPanel {
         formPanel.add(buttonPanel, gbc);
 
         return formPanel;
+    }
+
+    private void updateSelectedPatient() {
+        int selectedRow = patientTable.getSelectedRow();
+        if (selectedRow >= 0) {
+            String nom = txtNom.getText();
+            String sexe = comboSexe.getSelectedItem().toString();
+            String age = txtAge.getText();
+            String email = txtEmail.getText();
+            String adresse = txtAdresse.getText();
+            String dateNaissance = txtDateNaissance.getText();
+
+            tableModel.setValueAt(nom, selectedRow, 0);
+            tableModel.setValueAt(sexe, selectedRow, 1);
+            tableModel.setValueAt(age, selectedRow, 2);
+            tableModel.setValueAt(email, selectedRow, 3);
+            tableModel.setValueAt(adresse, selectedRow, 4);
+            tableModel.setValueAt(dateNaissance, selectedRow, 5);
+
+            saveTableDataToFile();
+        } else {
+            JOptionPane.showMessageDialog(this, "Veuillez sélectionner une ligne à modifier.");
+        }
+    }
+
+    private void deleteSelectedPatient() {
+        int selectedRow = patientTable.getSelectedRow();
+        if (selectedRow >= 0) {
+            tableModel.removeRow(selectedRow);
+            saveTableDataToFile();
+        } else {
+            JOptionPane.showMessageDialog(this, "Veuillez sélectionner une ligne à supprimer.");
+        }
+    }
+
+    private void saveTableDataToFile() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, false))) {
+            for (int i = 0; i < tableModel.getRowCount(); i++) {
+                StringBuilder row = new StringBuilder();
+                for (int j = 1; j < tableModel.getColumnCount() - 1; j++) { // Exclude first column and last column (Dossier Médical)
+                    row.append(tableModel.getValueAt(i, j)).append(",");
+                }
+                writer.write(row.substring(0, row.length() - 1)); // Remove trailing comma
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Erreur lors de la sauvegarde des données : " + e.getMessage());
+        }
     }
 
     private void addFormField(JPanel panel, GridBagConstraints gbc, int row, String label, JComponent field) {
@@ -131,16 +183,7 @@ public class PatientView extends JPanel {
         String dateNaissance = txtDateNaissance.getText();
 
         tableModel.addRow(new Object[]{nom, sexe, age, email, adresse, dateNaissance, "Voir"});
-        saveToFile(FILE_PATH, nom + "," + sexe + "," + age + "," + email + "," + adresse + "," + dateNaissance);
-    }
-
-    private void saveToFile(String filePath, String data) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
-            writer.write(data);
-            writer.newLine();
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Erreur lors de la sauvegarde : " + e.getMessage());
-        }
+        saveTableDataToFile();
     }
 
     private Object[][] loadPatientDataFromFile(String filePath) {
@@ -153,7 +196,9 @@ public class PatientView extends JPanel {
                 if (lineNumber == 1) continue; // Skip the first line (header)
 
                 String[] fields = line.split(",");
-                data.add(new Object[]{fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], "Voir"});
+                if (fields.length > 1) { // Ensure there are enough fields to avoid IndexOutOfBounds
+                    data.add(new Object[]{fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], "Voir"});
+                }
             }
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "Erreur lors du chargement des données : " + e.getMessage());

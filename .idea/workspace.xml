@@ -5,17 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d343a93d-e21c-404a-9590-88f9d94682c2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/dao/ActRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/dao/implementations/ActRepositoryImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/model/Act.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/model/enums/TypeAct.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/presentation/vue/DossierMedicalView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/acts.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/presentation/vue/DossierMedicaleView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/presentation/vue/ConsultationView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/presentation/vue/PatientView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/presentation/vue/PatientView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/presentation/vue/RendezVousView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/presentation/vue/RendezVousView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/consultation.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/consultation.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/presentation/vue/PatientsView.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
