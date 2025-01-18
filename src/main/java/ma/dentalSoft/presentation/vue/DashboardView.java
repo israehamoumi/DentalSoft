@@ -3,90 +3,144 @@ package ma.dentalSoft.presentation.vue;
 import ma.dentalSoft.model.Utilisateur;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DashboardView extends JFrame {
     private final Utilisateur utilisateur;
+    private final CardLayout cardLayout;
+    private final JPanel mainPanel;
 
     public DashboardView(Utilisateur utilisateur) {
         this.utilisateur = utilisateur;
         setTitle("DentalSoft Dashboard");
         setSize(1200, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null); // Center the window
+        setLocationRelativeTo(null); // Centrer la fenêtre
         setLayout(new BorderLayout());
 
-        // Add components to the dashboard
+        // Gestionnaire de disposition pour les pages
+        cardLayout = new CardLayout();
+        mainPanel = new JPanel(cardLayout);
+
+        // Ajouter les différentes pages au tableau de bord
+        mainPanel.add(createDashboardPanel(), "Dashboard");
+        mainPanel.add(new ProfileView(utilisateur), "Profile"); // Page Profil
+        mainPanel.add(new PatientView(this), "Patient"); // Page Patients
+        mainPanel.add(new RendezVousView(this), "DossierMedical"); // Page Dossier Médical
+
+        // Ajouter les composants principaux
         add(createHeader(), BorderLayout.NORTH);
         add(createNavigationPanel(), BorderLayout.WEST);
-        add(createMainPanel(), BorderLayout.CENTER);
+        add(mainPanel, BorderLayout.CENTER);
+
+        // Afficher le tableau de bord par défaut
+        cardLayout.show(mainPanel, "Dashboard");
     }
 
-    // Create Header
+    // Méthode pour afficher la page Dossier Médical
+    public void showDossierMedical() {
+        cardLayout.show(mainPanel, "DossierMedical");
+    }
+
+    // Créer l'en-tête
     private JPanel createHeader() {
-        JPanel header = new JPanel(new BorderLayout());
-        header.setBackground(Color.WHITE);
+        JPanel header = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g;
+                GradientPaint gradient = new GradientPaint(0, 0, new Color(0, 102, 204), 0, getHeight(), new Color(51, 153, 255));
+                g2d.setPaint(gradient);
+                g2d.fillRect(0, 0, getWidth(), getHeight());
+            }
+        };
+        header.setPreferredSize(new Dimension(1200, 80));
+        header.setLayout(new BorderLayout());
 
-        // Title
         JLabel lblTitle = new JLabel("DentalSoft", SwingConstants.CENTER);
-        lblTitle.setFont(new Font("Arial", Font.BOLD, 24));
-        lblTitle.setForeground(new Color(102, 0, 153));
+        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 30));
+        lblTitle.setForeground(Color.WHITE);
 
-        // User Info
         JLabel lblUser = new JLabel("Dr. " + utilisateur.getName(), SwingConstants.RIGHT);
-        lblUser.setFont(new Font("Arial", Font.BOLD, 18));
-        lblUser.setForeground(Color.BLACK);
+        lblUser.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+        lblUser.setForeground(Color.WHITE);
         lblUser.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 20));
 
-        // Add to header
         header.add(lblTitle, BorderLayout.CENTER);
         header.add(lblUser, BorderLayout.EAST);
 
         return header;
     }
 
-    // Create Navigation Panel
+    // Créer le panneau de navigation
     private JPanel createNavigationPanel() {
-        JPanel navPanel = new JPanel(new GridLayout(8, 1, 5, 5));
-        navPanel.setBackground(new Color(102, 0, 153)); // Purple background
+        JPanel navPanel = new JPanel(new GridLayout(8, 1, 10, 10)){
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g;
+                GradientPaint gradient = new GradientPaint(0, 0, new Color(0, 102, 204), 0, getHeight(), new Color(51, 153, 255));
+                g2d.setPaint(gradient);
+                g2d.fillRect(0, 0, getWidth(), getHeight());
+            }
+        };
+        navPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        // Navigation buttons
-        String[] navItems = {"Mon Profile", "Agenda", "Patients", "Caisse", "Personnel", "Paramètres", "", "Déconnexion"};
+        String[] navItems = {"Dashboard", "Mon Profile", "Patients", "Caisse", "Personnel", "Paramètres", "Déconnexion"};
         for (String item : navItems) {
-            JButton btn = new JButton(item);
-            btn.setForeground(Color.WHITE);
-            btn.setBackground(new Color(102, 0, 153)); // Purple buttons
-            btn.setFont(new Font("Arial", Font.PLAIN, 16));
-            btn.setFocusPainted(false);
-            btn.setBorderPainted(false);
-
             if (item.isEmpty()) {
                 navPanel.add(Box.createVerticalStrut(10)); // Add space
-            } else if (item.equals("Déconnexion")) {
-                btn.setBackground(Color.RED);
-                btn.addActionListener(e -> {
-                    JOptionPane.showMessageDialog(this, "Déconnexion...");
-                    dispose();
-                    new LoginView().setVisible(true);
-                });
-            } else if (item.equals("Mon Profile")) {
-                btn.addActionListener(e -> {
-                    new ProfileView(utilisateur).setVisible(true);
-                    dispose();
-                });
-            } else if (item.equals("Patients")) { // Action pour le bouton "Patients"
-                btn.addActionListener(e -> {
-                    JFrame patientFrame = new JFrame("Patients");
-                    patientFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    patientFrame.setSize(800, 600);
-
-                    PatientView patientView = new PatientView(patientFrame); // Vue des patients
-                    patientFrame.add(patientView);
-
-                    patientFrame.setVisible(true);
-                    dispose();
-                });
+                continue;
             }
+            JButton btn = new JButton(item) {
+
+                @Override
+                protected void paintComponent(Graphics g) {
+                    Graphics2D g2d = (Graphics2D) g;
+                    g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                    // Set background matching the navigation panel
+                    GradientPaint gradient = new GradientPaint(0, 0, new Color(0, 102, 204), 0, getHeight(), new Color(51, 153, 255));
+                    g2d.setPaint(gradient);
+                    g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
+
+                    super.paintComponent(g);
+                }
+                @Override
+                protected void paintBorder(Graphics g) {
+                    Graphics2D g2d = (Graphics2D) g;
+                    g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                    GradientPaint gradient = new GradientPaint(0, 0, new Color(0, 102, 204), 0, getHeight(), new Color(51, 153, 255));
+                    g2d.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 20, 20);
+                }
+
+                @Override
+                public void setContentAreaFilled(boolean b) {
+                }
+            };
+            btn.setForeground(Color.WHITE);
+            btn.setBackground(new Color(0, 51, 153));
+
+            btn.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+            btn.setFocusPainted(false);
+            btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            btn.setOpaque(false);
+
+            btn.addActionListener(e -> {
+                switch (item) {
+                    case "Dashboard" -> cardLayout.show(mainPanel, "Dashboard");
+                    case "Mon Profile" -> cardLayout.show(mainPanel, "Profile");
+                    case "Patients" -> cardLayout.show(mainPanel, "Patient");
+                    case "Déconnexion" -> {
+                        JOptionPane.showMessageDialog(this, "Déconnexion...");
+                        dispose();
+                        new LoginView().setVisible(true);
+                    }
+                }
+            });
 
             navPanel.add(btn);
         }
@@ -94,17 +148,83 @@ public class DashboardView extends JFrame {
         return navPanel;
     }
 
-    // Create Main Panel
-    private JPanel createMainPanel() {
-        JPanel mainPanel = new JPanel(new BorderLayout());
-        mainPanel.setBackground(Color.WHITE);
+    // Panneau de tableau de bord principal
+    private JPanel createDashboardPanel() {
+        JPanel dashboardPanel = new JPanel(new BorderLayout());
+        dashboardPanel.setBackground(Color.WHITE);
 
-        // Placeholder for main content
-        JLabel lblPlaceholder = new JLabel("Bienvenue sur le tableau de bord DentalSoft!", SwingConstants.CENTER);
-        lblPlaceholder.setFont(new Font("Arial", Font.BOLD, 18));
-        lblPlaceholder.setForeground(new Color(102, 0, 153));
-        mainPanel.add(lblPlaceholder, BorderLayout.CENTER);
+        JPanel statsPanel = new JPanel(new GridLayout(2, 4, 20, 20));
+        statsPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        statsPanel.setBackground(Color.WHITE);
 
-        return mainPanel;
+        String[] statsLabels = {
+                "Recette du Jour", "Recette du mois", "Recette de l'année", "Dépenses du mois",
+                "Nbr de Consultations du Jour", "Nbr de Consultations du mois", "Nbr de Consultations de l'année"
+        };
+
+        String[] statsValues = {"2000 DH", "... DH", "... DH", "... DH", "15", "400", "5000"};
+
+        for (int i = 0; i < statsLabels.length; i++) {
+            JPanel circlePanel = new JPanel(new BorderLayout());
+            circlePanel.setBackground(Color.WHITE);
+            circlePanel.setBorder(BorderFactory.createLineBorder(new Color(0, 86, 174), 2));
+
+            JLabel lblValue = new JLabel(statsValues[i], SwingConstants.CENTER);
+            lblValue.setFont(new Font("Segoe UI", Font.BOLD, 20));
+            lblValue.setForeground(new Color(0, 86, 174));
+
+            JLabel lblStat = new JLabel(statsLabels[i], SwingConstants.CENTER);
+            lblStat.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+            lblStat.setForeground(new Color(0, 51, 153));
+
+            circlePanel.add(lblValue, BorderLayout.CENTER);
+            circlePanel.add(lblStat, BorderLayout.SOUTH);
+
+            statsPanel.add(circlePanel);
+        }
+
+        JPanel lowerPanel = new JPanel(new BorderLayout(20, 20));
+        lowerPanel.setBackground(Color.WHITE);
+        lowerPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
+        String[] columns = {"Date", "Heure", "Statut", "Motif"};
+        Object[][] data = loadRendezVousData();
+
+        JTable rdvTable = new JTable(new DefaultTableModel(data, columns));
+        rdvTable.setRowHeight(30);
+        rdvTable.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
+        rdvTable.getTableHeader().setBackground(new Color(0, 86, 174));
+        rdvTable.getTableHeader().setForeground(Color.WHITE);
+        rdvTable.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+
+        JScrollPane tableScrollPane = new JScrollPane(rdvTable);
+        tableScrollPane.setBorder(BorderFactory.createTitledBorder("Rendez-Vous du Jour"));
+
+        lowerPanel.add(tableScrollPane, BorderLayout.CENTER);
+
+        dashboardPanel.add(statsPanel, BorderLayout.NORTH);
+        dashboardPanel.add(lowerPanel, BorderLayout.CENTER);
+
+        return dashboardPanel;
+    }
+
+    private Object[][] loadRendezVousData() {
+        List<Object[]> data = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(RendezVousView.FILE_PATH))) {
+            String line;
+            int lineNumber = 0;
+            while ((line = reader.readLine()) != null) {
+                lineNumber++;
+                if (lineNumber == 1) continue;
+
+                String[] fields = line.split(",");
+                if (fields.length >= 4) {
+                    data.add(new Object[]{fields[1], fields[2], fields[3], fields[4]});
+                }
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Erreur lors du chargement des rendez-vous : " + e.getMessage());
+        }
+        return data.toArray(new Object[0][]);
     }
 }

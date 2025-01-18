@@ -27,7 +27,7 @@ public class OrdonnanceView extends JPanel {
         // Title
         JLabel title = new JLabel("Gestion des Ordonnances", SwingConstants.CENTER);
         title.setFont(new Font("Arial", Font.BOLD, 28));
-        title.setForeground(new Color(102, 0, 153));
+        title.setForeground(new Color(0, 86, 174));
         title.setBorder(new EmptyBorder(20, 10, 20, 10));
         add(title, BorderLayout.NORTH);
 
@@ -53,7 +53,7 @@ public class OrdonnanceView extends JPanel {
         ordonnanceTable = new JTable(ordonnanceTableModel);
         ordonnanceTable.setRowHeight(30);
         ordonnanceTable.getTableHeader().setFont(new Font("Arial", Font.BOLD, 16));
-        ordonnanceTable.getTableHeader().setBackground(new Color(102, 0, 153));
+        ordonnanceTable.getTableHeader().setBackground(new Color(0, 86, 174));
         ordonnanceTable.getTableHeader().setForeground(Color.WHITE);
 
         JScrollPane scrollPane = new JScrollPane(ordonnanceTable);
@@ -67,7 +67,7 @@ public class OrdonnanceView extends JPanel {
 
     private JPanel createOrdonnanceForm() {
         JPanel formPanel = new JPanel(new GridBagLayout());
-        formPanel.setBackground(new Color(243, 236, 255));
+        formPanel.setBackground(new Color(255, 255, 255));
         formPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
 
         GridBagConstraints gbc = new GridBagConstraints();

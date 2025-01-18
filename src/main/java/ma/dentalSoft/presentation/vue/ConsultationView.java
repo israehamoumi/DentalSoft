@@ -41,7 +41,7 @@ public class ConsultationView extends JPanel {
 
         JLabel lblTitle = new JLabel("Gestion des Consultations", SwingConstants.CENTER);
         lblTitle.setFont(new Font("Arial", Font.BOLD, 24));
-        lblTitle.setForeground(new Color(102, 0, 153));
+        lblTitle.setForeground(new Color(0, 86, 174));
 
         header.add(lblTitle, BorderLayout.CENTER);
         return header;
@@ -62,7 +62,7 @@ public class ConsultationView extends JPanel {
         table.setFont(new Font("Arial", Font.PLAIN, 14));
         table.setRowHeight(30);
         table.getTableHeader().setFont(new Font("Arial", Font.BOLD, 16));
-        table.getTableHeader().setBackground(new Color(102, 0, 153));
+        table.getTableHeader().setBackground(new Color(0, 86, 174));
         table.getTableHeader().setForeground(Color.WHITE);
 
         return new JScrollPane(table);
@@ -70,7 +70,7 @@ public class ConsultationView extends JPanel {
 
     private JPanel createFormPanel() {
         JPanel formPanel = new JPanel(new GridBagLayout());
-        formPanel.setBackground(new Color(243, 236, 255));
+        formPanel.setBackground(new Color(255, 255, 255));
         formPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
 
         GridBagConstraints gbc = new GridBagConstraints();

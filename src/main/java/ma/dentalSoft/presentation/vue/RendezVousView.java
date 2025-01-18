@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RendezVousView extends JPanel {
-    private static final String FILE_PATH = "src/main/resources/rendezVous.txt";
+    public static final String FILE_PATH = "src/main/resources/rendezVous.txt";
     private DefaultTableModel tableModel;
     private JTable table;
 
@@ -30,7 +30,7 @@ public class RendezVousView extends JPanel {
 
         JLabel lblTitle = new JLabel("Gestion de Dossier Medical", SwingConstants.CENTER);
         lblTitle.setFont(new Font("Arial", Font.BOLD, 24));
-        lblTitle.setForeground(new Color(102, 0, 153));
+        lblTitle.setForeground(new Color(0, 76, 153));
 
         header.add(lblTitle, BorderLayout.CENTER);
         return header;
@@ -64,7 +64,7 @@ public class RendezVousView extends JPanel {
         table = new JTable(tableModel);
         table.setRowHeight(30);
         table.getTableHeader().setFont(new Font("Arial", Font.BOLD, 16));
-        table.getTableHeader().setBackground(new Color(102, 0, 153));
+        table.getTableHeader().setBackground(new Color(0, 76, 153));
         table.getTableHeader().setForeground(Color.WHITE);
 
         JScrollPane scrollPane = new JScrollPane(table);
@@ -78,7 +78,7 @@ public class RendezVousView extends JPanel {
 
     private JPanel createRendezVousForm() {
         JPanel formPanel = new JPanel(new GridBagLayout());
-        formPanel.setBackground(new Color(243, 236, 255));
+        formPanel.setBackground(new Color(255, 255, 255));
         formPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
 
         GridBagConstraints gbc = new GridBagConstraints();

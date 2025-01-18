@@ -17,6 +17,10 @@ public class Utilisateur {
         this.motDePasse = motDePasse;
     }
 
+    public Utilisateur() {
+
+    }
+
     public int getId() {
         return id;
     }
@@ -39,5 +43,8 @@ public class Utilisateur {
 
     public String getMotDePasse() {
         return motDePasse;
+    }
+
+    public void setName(String ahmed) {
     }
 }
