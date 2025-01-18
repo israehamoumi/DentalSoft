@@ -30,6 +30,7 @@ public class DashboardView extends JFrame {
         mainPanel.add(createDashboardPanel(), "Dashboard");
         mainPanel.add(new ProfileView(utilisateur), "Profile"); // Page Profil
         mainPanel.add(new PatientView(this), "Patient"); // Page Patients
+        mainPanel.add(new AgendaView(), "Agenda");
         mainPanel.add(new RendezVousView(this), "DossierMedical"); // Page Dossier Médical
 
         // Ajouter les composants principaux
@@ -90,7 +91,7 @@ public class DashboardView extends JFrame {
         };
         navPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        String[] navItems = {"Dashboard", "Mon Profile", "Patients", "Caisse", "Personnel", "Paramètres", "Déconnexion"};
+        String[] navItems = {"Dashboard","Agenda" ,"Mon Profile", "Patients", "Caisse", "Personnel", "Paramètres", "Déconnexion"};
         for (String item : navItems) {
             if (item.isEmpty()) {
                 navPanel.add(Box.createVerticalStrut(10)); // Add space
@@ -134,6 +135,7 @@ public class DashboardView extends JFrame {
                     case "Dashboard" -> cardLayout.show(mainPanel, "Dashboard");
                     case "Mon Profile" -> cardLayout.show(mainPanel, "Profile");
                     case "Patients" -> cardLayout.show(mainPanel, "Patient");
+                    case "Agenda" -> cardLayout.show(mainPanel, "Agenda"); // Basculer vers l'agenda
                     case "Déconnexion" -> {
                         JOptionPane.showMessageDialog(this, "Déconnexion...");
                         dispose();
@@ -141,6 +143,7 @@ public class DashboardView extends JFrame {
                     }
                 }
             });
+
 
             navPanel.add(btn);
         }
