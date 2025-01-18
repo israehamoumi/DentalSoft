@@ -1,4 +1,5 @@
-# Format: id,dossierMedicalId,medicaments
-1,1,Amoxicillin 500mg;Ibuprofen 200mg
-2,2,Paracetamol 500mg
-3,3,Antibiotics 250mg
+# Format: date,motif,categorie,risque
+2023-12-25,Prescription pour grippe,Allergie,Faible
+2024-01-10,Suivi postopératoire,Chirurgie,Modéré
+2024-02-14,Ordonnance pour allergies,Maladie Chronique,Élevé
+

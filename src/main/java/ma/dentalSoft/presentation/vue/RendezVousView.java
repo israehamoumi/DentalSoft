@@ -47,9 +47,10 @@ public class RendezVousView extends JPanel {
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.addTab("Consultations", new ConsultationView());
         tabbedPane.addTab("Rendez-vous", createRendezVousTab());
-        tabbedPane.addTab("Ordonnances", createOrdonnancesTab());
+        tabbedPane.addTab("Ordonnances", new OrdonnanceView());
         return tabbedPane;
     }
+
 
     private JPanel createRendezVousTab() {
         JPanel rendezVousTab = new JPanel(new BorderLayout());
