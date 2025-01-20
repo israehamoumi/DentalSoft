@@ -191,7 +191,6 @@ public class LoginView extends JFrame {
 
             Utilisateur utilisateur = validateLogin(name, password, selectedRole);
             if (utilisateur != null) {
-                JOptionPane.showMessageDialog(this, "Login successful!");
                 this.dispose();
                 new DashboardView(utilisateur).setVisible(true);
             } else {
