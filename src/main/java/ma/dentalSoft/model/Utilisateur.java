@@ -6,21 +6,19 @@ public class Utilisateur {
     private String role;
     private String email;
     private String telephone;
-    private String motDePasse;
+    private String password;
 
-    public Utilisateur(int id, String name, String role, String email, String telephone, String motDePasse) {
+    // Constructeur avec 6 arguments
+    public Utilisateur(int id, String name, String role, String email, String telephone, String password) {
         this.id = id;
         this.name = name;
         this.role = role;
         this.email = email;
         this.telephone = telephone;
-        this.motDePasse = motDePasse;
+        this.password = password;
     }
 
-    public Utilisateur() {
-
-    }
-
+    // Getter et Setter
     public int getId() {
         return id;
     }
@@ -41,10 +39,25 @@ public class Utilisateur {
         return telephone;
     }
 
-    public String getMotDePasse() {
-        return motDePasse;
+    public String getPassword() {
+        return password;
     }
 
-    public void setName(String ahmed) {
+    public void setId(int i) {
+    }
+
+    public void setName(String text) {
+    }
+
+    public void setRole(String text) {
+    }
+
+    public void setEmail(String text) {
+    }
+
+    public void setTelephone(String text) {
+    }
+
+    public void setMotDePasse(String text) {
     }
 }

@@ -6,6 +6,8 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.io.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +15,7 @@ public class DashboardView extends JFrame {
     private final Utilisateur utilisateur;
     private final CardLayout cardLayout;
     private final JPanel mainPanel;
+    private final CaisseView caisseView;
 
     public DashboardView(Utilisateur utilisateur) {
         this.utilisateur = utilisateur;
@@ -21,6 +24,7 @@ public class DashboardView extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null); // Centrer la fenêtre
         setLayout(new BorderLayout());
+        this.caisseView = new CaisseView(); // Instancier CaisseView
 
         // Gestionnaire de disposition pour les pages
         cardLayout = new CardLayout();
@@ -31,6 +35,8 @@ public class DashboardView extends JFrame {
         mainPanel.add(new ProfileView(utilisateur), "Profile"); // Page Profil
         mainPanel.add(new PatientView(this), "Patient"); // Page Patients
         mainPanel.add(new AgendaView(), "Agenda");
+        mainPanel.add(new CaisseView(), "Caisse");
+        mainPanel.add(new UtilisateurSwingApp(this), "Personnel"); // Page Gestion des personnels
         mainPanel.add(new RendezVousView(this), "DossierMedical"); // Page Dossier Médical
 
         // Ajouter les composants principaux
@@ -91,7 +97,7 @@ public class DashboardView extends JFrame {
         };
         navPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        String[] navItems = {"Dashboard","Agenda" ,"Mon Profile", "Patients", "Caisse", "Personnel", "Paramètres", "Déconnexion"};
+        String[] navItems = {"Dashboard","Agenda" ,"Mon Profil", "Patients", "Caisse", "Personnel", "Déconnexion"};
         for (String item : navItems) {
             if (item.isEmpty()) {
                 navPanel.add(Box.createVerticalStrut(10)); // Add space
@@ -133,9 +139,11 @@ public class DashboardView extends JFrame {
             btn.addActionListener(e -> {
                 switch (item) {
                     case "Dashboard" -> cardLayout.show(mainPanel, "Dashboard");
-                    case "Mon Profile" -> cardLayout.show(mainPanel, "Profile");
+                    case "Mon Profil" -> cardLayout.show(mainPanel, "Profile");
                     case "Patients" -> cardLayout.show(mainPanel, "Patient");
                     case "Agenda" -> cardLayout.show(mainPanel, "Agenda"); // Basculer vers l'agenda
+                    case "Caisse" -> cardLayout.show(mainPanel, "Caisse");
+                    case "Personnel" -> cardLayout.show(mainPanel, "Personnel"); // Basculer vers la gestion des personnels
                     case "Déconnexion" -> {
                         JOptionPane.showMessageDialog(this, "Déconnexion...");
                         dispose();
@@ -149,6 +157,51 @@ public class DashboardView extends JFrame {
         }
 
         return navPanel;
+    }
+    private int getConsultationCount(String period) {
+        int count = 0;
+        try (BufferedReader reader = new BufferedReader(new FileReader(RendezVousView.FILE_PATH))) {
+            String line;
+            int lineNumber = 0;
+            while ((line = reader.readLine()) != null) {
+                lineNumber++;
+                if (lineNumber == 1) continue; // Ignorer l'en-tête
+
+                String[] fields = line.split(",");
+                if (fields.length >= 4) {
+                    // Filtrer les consultations en fonction de la période
+                    switch (period) {
+                        case "jour":
+                            if (isToday(fields[1])) count++;
+                            break;
+                        case "mois":
+                            if (isThisMonth(fields[1])) count++;
+                            break;
+                        case "annee":
+                            if (isThisYear(fields[1])) count++;
+                            break;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Erreur lors du chargement des données de consultations : " + e.getMessage());
+        }
+        return count;
+    }
+    private boolean isToday(String date) {
+        LocalDate consultationDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        return consultationDate.equals(LocalDate.now());
+    }
+
+    private boolean isThisMonth(String date) {
+        LocalDate consultationDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        LocalDate now = LocalDate.now();
+        return consultationDate.getYear() == now.getYear() && consultationDate.getMonth() == now.getMonth();
+    }
+
+    private boolean isThisYear(String date) {
+        LocalDate consultationDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        return consultationDate.getYear() == LocalDate.now().getYear();
     }
 
     // Panneau de tableau de bord principal
@@ -164,8 +217,20 @@ public class DashboardView extends JFrame {
                 "Recette du Jour", "Recette du mois", "Recette de l'année", "Dépenses du mois",
                 "Nbr de Consultations du Jour", "Nbr de Consultations du mois", "Nbr de Consultations de l'année"
         };
+        String recetteJour = caisseView.getRecette("jour") + " DH";
+        String recetteMois = caisseView.getRecette("mois") + " DH";
+        String recetteAnnee = caisseView.getRecette("annee") + " DH";
+        String depensesMois = caisseView.getDepenses("mois") + " DH";
 
-        String[] statsValues = {"2000 DH", "... DH", "... DH", "... DH", "15", "400", "5000"};
+        String[] statsValues = {
+                recetteJour, recetteMois, recetteAnnee, depensesMois,
+                String.valueOf(getConsultationCount("jour")),
+                String.valueOf(getConsultationCount("mois")),
+                String.valueOf(getConsultationCount("annee")),
+                String.valueOf(getConsultationCount("jour")), // Consultations du jour
+                String.valueOf(getConsultationCount("mois")), // Consultations du mois
+                String.valueOf(getConsultationCount("annee")) // Consultations de l'année
+        };
 
         for (int i = 0; i < statsLabels.length; i++) {
             JPanel circlePanel = new JPanel(new BorderLayout());

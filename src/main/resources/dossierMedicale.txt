@@ -1,4 +1,7 @@
-# Format: id,patientId
-1,1
-2,2
-3,3
+# PatientID,Type,Field1,Field2,Field3,Field4
+1,Dossier,Allergy,None,NA,NA
+1,Consultation,2025-01-10,09:00,Dental Cleaning,100
+1,Ordonnance,2025-01-10,Amoxicillin,500mg
+2,Dossier,Chronic Disease,Diabetes,NA,NA
+2,Consultation,2025-01-12,14:00,Tooth Extraction,200
+2,Ordonnance,2025-01-12,Ibuprofen,400mg

@@ -1,0 +1,3 @@
+N° Facture,Date,Nom Complet du Patient,N° Consultation,Montant
+01T,8-01-2023,Mohammed Jorio,93,670DH
+04T,28-01-2023,Amal Khaled,345,2600DH

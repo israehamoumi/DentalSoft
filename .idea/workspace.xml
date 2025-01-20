@@ -5,9 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d343a93d-e21c-404a-9590-88f9d94682c2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/presentation/vue/AgendaView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/presentation/vue/CaisseView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/presentation/vue/UtilisateurSwingApp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/caisse_data.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/model/Utilisateur.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/model/Utilisateur.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/presentation/vue/DashboardView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/presentation/vue/DashboardView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/presentation/vue/LoginView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ma/dentalSoft/presentation/vue/LoginView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/dossierMedicale.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dossierMedicale.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/role.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/role.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/utilisateur.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/utilisateur.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +48,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.Agenda.executor": "Run",
+    "Application.CaisseView.executor": "Run",
     "Application.DashboardView.executor": "Run",
     "Application.DentalSoftApplication.executor": "Run",
     "Application.LoginView.executor": "Run",
@@ -64,6 +73,14 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-125ca727e0f0-intellij.indexing.shared.core-IU-243.23654.117" />
+        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-IU-243.23654.117" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -75,10 +92,25 @@
       <workItem from="1736367864166" duration="10385000" />
       <workItem from="1736450284041" duration="3090000" />
       <workItem from="1736815984640" duration="5306000" />
+      <workItem from="1737320691469" duration="657000" />
+      <workItem from="1737321513231" duration="6297000" />
+      <workItem from="1737364883620" duration="6292000" />
+      <workItem from="1737404866654" duration="10986000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
